@@ -37,7 +37,7 @@ export default function App() {
         <Stack.Screen
           name="RegisterTask"
           component={RegisterTask}
-          options={{ title: 'Formulário de Tarefas' }}
+          options={{ title: 'Registro de Tarefas' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
