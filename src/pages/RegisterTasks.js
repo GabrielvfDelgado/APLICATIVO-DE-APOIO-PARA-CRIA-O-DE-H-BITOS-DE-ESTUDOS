@@ -44,7 +44,7 @@ export default props => {
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Sucesso',
-              'Usuário Registrado com Sucesso !!!',
+              'Tarefa Registrada com Sucesso!',
               [
                 {
                   text: 'Ok',
@@ -58,6 +58,63 @@ export default props => {
       );
     });
 
+  };
+
+  const update_task = () => {
+    if (!taskName) {
+      alert('Por favor preencha o nome!');
+      return;
+    }
+    if (!taskTime) {
+      console.log('sem tempo');
+      db.transaction((tx) => {
+        tx.executeSql(
+          'UPDATE table_task set task_name=? where task_id=?',
+          [taskName, props.route.params.task_id],
+          (tx, results) => {
+            console.log('Results', results.rowsAffected);
+            if (results.rowsAffected > 0) {
+              Alert.alert(
+                'Sucesso',
+                'Task atualizada com sucesso!!',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () => props.navigation.navigate('HomeScreen'),
+                  },
+                ],
+                { cancelable: false }
+              );
+            }
+          }
+        );
+      });
+    }
+    else {
+      const pomodoro_necessary = calcularPomodoros(taskTime);
+      db.transaction((tx) => {
+        tx.executeSql(
+          'UPDATE table_task set task_name=?, task_duration=?, pomodoro_necessary=?, pomodoro_done=?, pomodoro_missing=?, concluded=? where task_id=?',
+          [taskName, taskTime, pomodoro_necessary, 0, pomodoro_necessary, false, props.route.params.task_id],
+          (tx, results) => {
+            console.log('Results', results.rowsAffected);
+            if (results.rowsAffected > 0) {
+              Alert.alert(
+                'Sucesso',
+                'Task atualizada com sucesso!!',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () => props.navigation.navigate('HomeScreen'),
+                  },
+                ],
+                { cancelable: false }
+              );
+            }
+          }
+        );
+      });
+    }
   };
 
   return (
@@ -74,7 +131,7 @@ export default props => {
             <Mytextinput
               onChangeText={taskTime => setTaskTime(taskTime)}
               placeholder='Informe o tempo:' />
-            <Mybutton title="Salvar" customClick={register_task} />
+            <Mybutton title="Salvar" customClick={props.route.params ? update_task : register_task} />
           </KeyboardAvoidingView>
         </ScrollView>
       </View>
