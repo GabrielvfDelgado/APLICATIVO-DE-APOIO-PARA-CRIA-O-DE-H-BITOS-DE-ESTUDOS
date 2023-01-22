@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, StyleSheet, Alert } from 'react-native';
-import { Button } from '@rneui/base';
+import { Image, SafeAreaView, View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { calcularPomodoros } from '../service/data_handler_register';
 import { DatabaseConnection } from '../database/database_connetion';
+
+import Mybutton from './components/Mybutton';
+import Mytextinput from './components/Mytextinput';
 
 const db = DatabaseConnection.getConnection();
 
@@ -11,7 +13,6 @@ export default props => {
   const [taskTime, setTaskTime] = useState('');
 
   const register_task = () => {
-    console.log('primeiro log register: ' + taskName, taskTime);
 
     if (!taskName) {
       alert('Por favor preencha o nome!');
@@ -19,6 +20,16 @@ export default props => {
     }
     if (!taskTime) {
       alert('Por favor preencha o tempo da tarefa');
+      return;
+    }
+
+    const validateTime = (time) => {
+      const re = /^((?!0+:00)\d{1,}:[0-5][0-9])$/;
+      return re.test(time);
+    };
+
+    if (!validateTime(taskTime)) {
+      alert('Valor inserido no tempo da tarefa invalido. Inserir no seguinte modelo HH:MM');
       return;
     }
 
@@ -50,36 +61,40 @@ export default props => {
   };
 
   return (
-    <View style={style.form}>
-      <Text>Nome da tarefa:</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={taskName => setTaskName(taskName)}
-        placeholder='Informe o Nome'
-      />
-      <Text>Tempo da tarefa</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={taskTime => setTaskTime(taskTime)}
-        placeholder='Informe o tempo'
-      />
-      <Button
-        title="Salvar"
-        onPress={register_task}
-      />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={{ flex: 1, justifyContent: 'space-between' }}>
+            <Image style={styles.image} source={require("../utils/img/logo_icon.png")} />
+            <Mytextinput
+              onChangeText={taskName => setTaskName(taskName)}
+              placeholder='Informe o nome:' />
+            <Mytextinput
+              onChangeText={taskTime => setTaskTime(taskTime)}
+              placeholder='Informe o tempo:' />
+            <Mybutton title="Salvar" customClick={register_task} />
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
 
   );
 };
 
-const style = StyleSheet.create({
-  form: {
-    padding: 12
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center'
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10
+  image: {
+    marginBottom: 40,
+    marginTop: 100,
+    marginLeft: 85,
+    width: 150,
+    height: 150,
   }
+
 });
