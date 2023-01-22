@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Button, Icon } from '@rneui/base';
 
 import HomeScreen from './pages/HomeScreen';
-import RegisterTasks from './pages/RegisterTasks';
+import RegisterTask from './pages/RegisterTasks';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,7 @@ export default function App() {
               title: 'Lista de Tarefas',
               headerRight: () => (
                 <Button
-                  onPress={() => navigation.navigate('RegisterTasks')}
+                  onPress={() => navigation.navigate('RegisterTask')}
                   type="clear"
                   icon={<Icon name="add" size={25} color='white' />}
                 />
@@ -35,8 +35,8 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="RegisterTasks"
-          component={RegisterTasks}
+          name="RegisterTask"
+          component={RegisterTask}
           options={{ title: 'Formulário de Tarefas' }}
         />
       </Stack.Navigator>
