@@ -62,7 +62,8 @@ export default props => {
 
       <ListItem
         bottomDivider
-        key={task.task_id}>
+        key={task.task_id}
+        onPress={() => props.navigation.navigate('TaskScreen', task)}>
         <ListItem.Content>
           <ListItem.Title>{task.task_name}</ListItem.Title>
         </ListItem.Content>

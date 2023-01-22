@@ -9,6 +9,7 @@ import { Button, Icon } from '@rneui/base';
 
 import HomeScreen from './pages/HomeScreen';
 import RegisterTask from './pages/RegisterTasks';
+import TaskScreen from './pages/TaskScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ export default function App() {
           name="RegisterTask"
           component={RegisterTask}
           options={{ title: 'Registro de Tarefas' }}
+        />
+        <Stack.Screen
+          name="TaskScreen"
+          component={TaskScreen}
+          options={{ title: 'Página da tarefa' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
