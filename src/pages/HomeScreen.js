@@ -45,13 +45,13 @@ export default props => {
     }
   }, [props, isFocused]);
 
-  function getActions(tarefa) {
+  function getActions(task) {
     return (
       <>
         <Button
           type="clear"
           icon={<Icon name='alarm' size={25} color="orange" />}
-          onPress={() => props.navigation.navigate('TimerScreen')}
+          onPress={() => props.navigation.navigate('TimerScreen', task)}
         ></Button>
       </>
     );

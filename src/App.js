@@ -10,6 +10,7 @@ import { Button, Icon } from '@rneui/base';
 import HomeScreen from './pages/HomeScreen';
 import RegisterTask from './pages/RegisterTasks';
 import TaskScreen from './pages/TaskScreen';
+import TimerScreen from './pages/TimerScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,11 @@ export default function App() {
           name="TaskScreen"
           component={TaskScreen}
           options={{ title: 'Página da tarefa' }}
+        />
+        <Stack.Screen
+          name="TimerScreen"
+          component={TimerScreen}
+          options={{ title: 'Pomodoro' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
