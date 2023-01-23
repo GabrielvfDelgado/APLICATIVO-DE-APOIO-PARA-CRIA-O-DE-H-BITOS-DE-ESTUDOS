@@ -5,8 +5,8 @@ import Mybutton from './components/Mybutton';
 
 const db = DatabaseConnection.getConnection();
 
-const INITIAL_WORK_MIN = '01';
-const INITIAL_BREAK_MIN = '01';
+const INITIAL_WORK_MIN = '25';
+const INITIAL_BREAK_MIN = '05';
 const INITIAL_SEC = '00';
 const WORK_LABEL = 'Pomodoro';
 const BREAK_LABEL = 'Descansar';
@@ -30,7 +30,9 @@ export default class App extends React.Component {
 
     this.secondsRemaining;
     this.isRunning = false;
+    this.pomodoro_mis = this.props.route.params.pomodoro_missing;
   }
+
 
   startStopTimer = () => {
     if (this.isRunning) {
@@ -88,7 +90,11 @@ export default class App extends React.Component {
       Vibration.vibrate(3 * 1000);
 
       if (this.state.session == WORK_LABEL) {
-        this.updatedPomodoro();
+        console.log(this.pomodoro_mis);
+        if (!this.props.route.params.pomodoro_missing == 0) {
+          this.pomodoro_mis = this.pomodoro_mis - 1;
+          this.updatedPomodoro();
+        }
         this.startBreak();
       } else {
         this.startWork();
