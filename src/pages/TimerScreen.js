@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { DatabaseConnection } from '../database/database_connetion';
 import Mybutton from './components/Mybutton';
 
@@ -13,6 +13,27 @@ export default props => {
   const [BreakCurrentTime, setBreakCurrentTime] = useState(breakTime);
   const [currentMode, setCurrentMode] = useState(0);
 
+  console.log(props.route.params);
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      title: `Pomodoro (${props.route.params.task_name})`
+    });
+
+    if (props.route.params.pomodoro_done === props.route.params.pomodoro_necessary) {
+      Alert.alert(
+        'Parabéns voce concluiu a tarefa.',
+        'Eu sempre acreditei em você!',
+        [
+          {
+            text: 'Ok',
+            onPress: () => props.navigation.navigate('HomeScreen'),
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+  }, []);
 
   useEffect(() => {
     let intervalId;
@@ -50,7 +71,7 @@ export default props => {
     return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
-  updatedDB = () => {
+  const updatedDB = () => {
     let pomodoro_done = props.route.params.pomodoro_done + 1;
     let pomodoro_missing = props.route.params.pomodoro_missing - 1;
     db.transaction((tx) => {
