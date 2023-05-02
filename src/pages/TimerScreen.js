@@ -7,20 +7,21 @@ const db = DatabaseConnection.getConnection();
 
 export default props => {
   const [isRunning, setIsRunning] = useState(false);
-  const [pomodoroTime, setPomodoroTime] = useState(0.1 * 60 * 1000);
-  const [breakTime, setBreakTime] = useState(0.2 * 60 * 1000);
+  const [pomodoroTime, setPomodoroTime] = useState(25 * 60 * 1000);
+  const [breakTime, setBreakTime] = useState(5 * 60 * 1000);
   const [currentTime, setCurrentTime] = useState(pomodoroTime);
   const [BreakCurrentTime, setBreakCurrentTime] = useState(breakTime);
   const [currentMode, setCurrentMode] = useState(0);
-
-  console.log(props.route.params);
+  const [pomodoroDone, setPomodoroDone] = useState(props.route.params.pomodoro_done);
+  const [pomodoroMissing, setPomodoroMissing] = useState(props.route.params.pomodoro_missing);
+  console.log("pomodoro done:" + pomodoroDone);
 
   useEffect(() => {
     props.navigation.setOptions({
       title: `Pomodoro (${props.route.params.task_name})`
     });
 
-    if (props.route.params.pomodoro_done === props.route.params.pomodoro_necessary) {
+    if (pomodoroDone === props.route.params.pomodoro_necessary) {
       Alert.alert(
         'Parabéns voce concluiu a tarefa.',
         'Eu sempre acreditei em você!',
@@ -33,7 +34,7 @@ export default props => {
         { cancelable: true }
       );
     }
-  }, []);
+  }, [pomodoroDone]);
 
   useEffect(() => {
     let intervalId;
@@ -49,6 +50,7 @@ export default props => {
 
     if (currentTime === 0) {
       if (currentMode === 0) {
+        console.log('teste');
         updatedDB();
       }
       setCurrentMode((currentMode + 1) % 2);
@@ -72,12 +74,15 @@ export default props => {
   };
 
   const updatedDB = () => {
-    let pomodoro_done = props.route.params.pomodoro_done + 1;
-    let pomodoro_missing = props.route.params.pomodoro_missing - 1;
+    let newPomodoroDone = pomodoroDone + 1;
+    let newPomodoroMissing = pomodoroMissing - 1;
+    setPomodoroDone(newPomodoroDone);
+    setPomodoroMissing(newPomodoroMissing);
+    console.log(newPomodoroDone);
     db.transaction((tx) => {
       tx.executeSql(
-        'UPDATE table_task set pomodoro_done=?, pomodoro_missing=? where task_id=?',
-        [pomodoro_done, pomodoro_missing, props.route.params.task_id]
+        'UPDATE table_task2 set pomodoro_done=?, pomodoro_missing=? where task_id=?',
+        [newPomodoroDone, newPomodoroMissing, props.route.params.task_id]
       );
     });
   };

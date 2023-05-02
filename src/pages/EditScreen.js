@@ -9,7 +9,7 @@ const db = DatabaseConnection.getConnection();
 const update_task = (props, name) => {
   db.transaction((tx) => {
     tx.executeSql(
-      'UPDATE table_task set task_name=? where task_id=?',
+      'UPDATE table_task2 set task_name=? where task_id=?',
       [name, props.route.params.task_id],
       (tx, results) => {
         if (results.rowsAffected > 0) {

@@ -56,7 +56,7 @@ function pieChart(task) {
 const deleteTaskDB = (props) => {
   db.transaction((tx) => {
     tx.executeSql(
-      'DELETE FROM table_task where task_id=?',
+      'DELETE FROM table_task2 where task_id=?',
       [props.route.params.task_id],
       (tx, results) => {
         if (results.rowsAffected > 0) {

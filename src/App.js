@@ -8,13 +8,14 @@ import RegisterTask from './pages/RegisterTasks';
 import TaskScreen from './pages/TaskScreen';
 import TimerScreen from './pages/TimerScreen';
 import EditScreen from './pages/EditScreen';
-import { SafeAreaView } from 'react-native';
+import { StatusBar } from 'react-native';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#1A4167' }}>
+    <>
+      <StatusBar backgroundColor='#1A4167' />
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName='HomeScreen'
@@ -29,7 +30,7 @@ export default function App() {
                   <Button
                     onPress={() => navigation.navigate('RegisterTask')}
                     type="clear"
-                    icon={<Icon name="add" size={25} color='white' />}
+                    icon={<Icon name="add" size={25} color='#fff' />}
                   />
                 )
               };
@@ -57,16 +58,17 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </>
   );
 }
 
 const screenOptions = {
   headerStyle: {
-    backgroundColor: '#1A4167'
+    backgroundColor: '#1A4167',
   },
   headerTintColor: '#fff',
   headerTitleStyle: {
     fontWeight: 'bold'
-  }
+  },
+  headerStatusBarHeight: 0, // Define a altura da barra de status como 0
 };

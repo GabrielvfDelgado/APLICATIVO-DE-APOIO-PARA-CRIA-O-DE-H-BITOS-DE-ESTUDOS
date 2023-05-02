@@ -19,13 +19,13 @@ export default props => {
         // Verifica se a tabela já existe
         // txn.executeSql('DROP TABLE IF EXISTS table_task', []);
         txn.executeSql(
-          "SELECT name FROM sqlite_master WHERE type='table' AND name='table_task'",
+          "SELECT name FROM sqlite_master WHERE type='table' AND name='table_task2'",
           [],
           (tx, res) => {
             if (res.rows.length === 0) {
               // Cria a tabela se ela não existir
               txn.executeSql(
-                'CREATE TABLE IF NOT EXISTS table_task(' +
+                'CREATE TABLE IF NOT EXISTS table_task2(' +
                 'task_id INTEGER PRIMARY KEY AUTOINCREMENT,' +
                 'task_name VARCHAR(20),' +
                 'task_data DATE,' +
@@ -44,7 +44,7 @@ export default props => {
       // Consulta os dados da tabela
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM table_task',
+          'SELECT * FROM table_task2',
           [],
           (tx, results) => {
             const temp = [];
@@ -60,7 +60,7 @@ export default props => {
   const deleteTaskDB = (props) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM table_task where task_id=?',
+        'DELETE FROM table_task2 where task_id=?',
         [props.task_id],
         (tx, results) => {
           if (results.rowsAffected > 0) {
@@ -73,7 +73,7 @@ export default props => {
                   onPress: () => {
                     db.transaction((tx) => {
                       tx.executeSql(
-                        'SELECT * FROM table_task',
+                        'SELECT * FROM table_task2',
                         [],
                         (tx, results) => {
                           const temp = [];

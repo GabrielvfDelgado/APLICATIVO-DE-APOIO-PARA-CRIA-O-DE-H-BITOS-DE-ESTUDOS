@@ -38,7 +38,7 @@ const register_task = (nome, duracao, db, props) => {
   const dataFormatada = dataAtual.toLocaleDateString('pt-BR');
   db.transaction(function (tx) {
     tx.executeSql(
-      'INSERT INTO table_task (' +
+      'INSERT INTO table_task2 (' +
       'task_name,' +
       'task_duration,' +
       'task_data,' +
