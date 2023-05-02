@@ -14,7 +14,6 @@ export default props => {
   const [currentMode, setCurrentMode] = useState(0);
   const [pomodoroDone, setPomodoroDone] = useState(props.route.params.pomodoro_done);
   const [pomodoroMissing, setPomodoroMissing] = useState(props.route.params.pomodoro_missing);
-  console.log("pomodoro done:" + pomodoroDone);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -50,7 +49,7 @@ export default props => {
 
     if (currentTime === 0) {
       if (currentMode === 0) {
-        console.log('teste');
+
         updatedDB();
       }
       setCurrentMode((currentMode + 1) % 2);
@@ -78,7 +77,6 @@ export default props => {
     let newPomodoroMissing = pomodoroMissing - 1;
     setPomodoroDone(newPomodoroDone);
     setPomodoroMissing(newPomodoroMissing);
-    console.log(newPomodoroDone);
     db.transaction((tx) => {
       tx.executeSql(
         'UPDATE table_task2 set pomodoro_done=?, pomodoro_missing=? where task_id=?',
