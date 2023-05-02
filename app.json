@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pomodoro_tcc",
+    "name": "Pomodoro",
     "slug": "pomodoro_tcc",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/pomodoro_icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.gabrieldelgado.pomodoro_tcc"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "155ade3b-c23d-4037-829e-843ee897ead8"
+      }
     }
   }
 }
