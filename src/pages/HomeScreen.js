@@ -54,6 +54,12 @@ export default props => {
           }
         );
       });
+      if (items.length == 0) {
+        Alert.alert(
+          'Atenção',
+          'Clique no + para registrar tarefa'
+        );
+      }
     }
   }, [props, isFocused]);
 
